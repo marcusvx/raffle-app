@@ -1,0 +1,17 @@
+.number {
+  box-sizing: border-box;
+  width: 50px;
+  overflow: hidden;
+}
+
+.is-stroked {
+  text-decoration: line-through;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.clickable:hover {
+  background-color: #b2dfdb;
+}

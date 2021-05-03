@@ -1,23 +1,20 @@
-import logo from './logo.svg';
-import './App.css';
+import "bulma/css/bulma.min.css";
+import { Navbar, Heading } from "react-bulma-components";
+import { NumbersTable } from "./components/NumbersTable";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Navbar fixed="top" color="primary">
+        <Navbar.Brand>
+          <Navbar.Item renderAs="a" href="#">
+            <Heading className="has-text-white">Rifa Online</Heading>
+          </Navbar.Item>
+        </Navbar.Brand>
+      </Navbar>
+      <div>
+        <NumbersTable></NumbersTable>
+      </div>
     </div>
   );
 }

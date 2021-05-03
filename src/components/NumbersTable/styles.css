@@ -1,0 +1,16 @@
+.numbers-table {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 0 2em 0;
+  padding: 0;
+  max-width: 700px;
+  margin: 15px auto;
+  align-items: center;
+  justify-content: center;
+}
+
+@media all and (max-width: 730px) {
+  .numbers-table {
+    margin: 8px;
+  }
+}
