@@ -23,6 +23,7 @@
     "start:app": "react-scripts start",
     "start:server": "env-cmd netlify-lambda serve functions -c ./webpack.config.js",
     "build": "npm-run-all --parallel build:**",
+    "postbuild": "npx staticrypt public/index.html Rifa#Theo2021 -o public/index.html",
     "build:app": "react-scripts build",
     "build:functions": "netlify-lambda build functions -c ./webpack.config.js",
     "test": "react-scripts test",
