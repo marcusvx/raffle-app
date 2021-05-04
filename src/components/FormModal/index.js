@@ -1,16 +1,24 @@
 import "./styles.css";
 import { Modal, Button, Form } from "react-bulma-components";
 import { useState } from "react";
+import api from "../../utils/api";
 
 export const FormModal = (props) => {
-  const { hideModal, selectedNumber, onConfirm } = props;
+  const { hideModal, selectedTicket, onConfirm } = props;
   const [name, setName] = useState("");
   const [nameState, setNameState] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
 
-  const confirmAndClose = () => {
-    onConfirm(selectedNumber);
+  const confirmAndClose = async () => {
+    await api.createBet({
+      name,
+      phone,
+      email,
+      ticketId: selectedTicket.id,
+    });
+
+    onConfirm(selectedTicket);
     hideModal();
   };
 
@@ -30,14 +38,14 @@ export const FormModal = (props) => {
       <Modal.Card>
         <Modal.Card.Header showClose={true}>
           <Modal.Card.Title>
-            Você escolheu o número <strong>{selectedNumber}</strong>
+            Você escolheu o número <strong>{selectedTicket.value}</strong>
           </Modal.Card.Title>
         </Modal.Card.Header>
         <Modal.Card.Body>
           <p className="mt-2 mb-4">
-            Você escolheu o número <strong>{selectedNumber}</strong>. Por favor,
-            informe os dados abaixo para que possamos registrar seu número no
-            sorteio.
+            Você escolheu o número <strong>{selectedTicket.value}</strong>. Por
+            favor, informe os dados abaixo para que possamos registrar seu
+            número no sorteio.
           </p>
           <form>
             <Form.Field>

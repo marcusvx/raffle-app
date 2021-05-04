@@ -4,40 +4,52 @@ import { RaffleNumber } from "../RaffleNumber";
 import { useModal } from "react-modal-hook";
 import { useEffect, useState } from "react";
 import { Box, Heading } from "react-bulma-components";
+import api from "../../utils/api";
 
 export const NumbersTable = () => {
-  const [selectedNumber, setSelectedNumber] = useState();
-  const [numbers, setNumbers] = useState();
+  const [selectedTicket, setSelectedTicket] = useState();
+  const [tickets, setTickets] = useState();
 
   useEffect(() => {
-    const numbers = Array(100)
-      .fill(1)
-      .map((c, i) => ({ value: (i + 1) * c, taken: false }));
+    async function getAllTickets() {
+      const result = await api.readAll();
+      setTickets(
+        result.map((item) => {
+          const [value, taken, ref] = item;
 
-    setNumbers(numbers);
+          return {
+            value,
+            taken,
+            id: ref["@ref"].id,
+          };
+        })
+      );
+    }
+    getAllTickets();
   }, []);
 
-  const confirmedNumber = (number) => {
-    setNumbers((state) => {
-      state.find((n) => n.value === number).taken = true;
+  const confirmedNumber = (ticket) => {
+    const { value } = ticket;
+
+    setTickets((state) => {
+      state.find((n) => n.value === value).taken = true;
       return state;
     });
-    console.log(number);
   };
 
   const [showModal, hideModal] = useModal(
     () => (
       <FormModal
         hideModal={hideModal}
-        selectedNumber={selectedNumber}
+        selectedTicket={selectedTicket}
         onConfirm={confirmedNumber}
       ></FormModal>
     ),
-    [selectedNumber]
+    [selectedTicket]
   );
 
-  const handleClick = (n) => {
-    setSelectedNumber(n);
+  const handleClick = (ticket) => {
+    setSelectedTicket(ticket);
     showModal();
   };
 
@@ -47,11 +59,11 @@ export const NumbersTable = () => {
         Clique em um número para concorrer ao sorteio
       </Heading>
       <Box className="numbers-table">
-        {numbers &&
-          numbers.map((n) => (
+        {tickets &&
+          tickets.map((ticket) => (
             <RaffleNumber
-              taken={n.taken}
-              value={n.value}
+              key={ticket.value}
+              ticket={ticket}
               onClick={handleClick}
             ></RaffleNumber>
           ))}

@@ -1,7 +1,8 @@
 import "./styles.css";
 
 export const RaffleNumber = (props) => {
-  const { taken, value, onClick } = props;
+  const { ticket, onClick } = props;
+  const { value, taken } = ticket;
 
   if (taken) {
     return (
@@ -17,7 +18,7 @@ export const RaffleNumber = (props) => {
   return (
     <div
       className="number m-1 is-size-4-desktop is-size-2-mobile clickable"
-      onClick={() => onClick(value)}
+      onClick={() => onClick(ticket)}
     >
       {value}
     </div>
