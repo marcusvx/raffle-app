@@ -4,6 +4,7 @@ import { RaffleNumber } from "../RaffleNumber";
 import { useModal } from "react-modal-hook";
 import { useEffect, useState } from "react";
 import { Box, Heading } from "react-bulma-components";
+import { toast } from "react-toastify";
 import api from "../../utils/api";
 
 export const NumbersTable = () => {
@@ -34,6 +35,10 @@ export const NumbersTable = () => {
     setTickets((state) => {
       state.find((n) => n.value === value).taken = true;
       return state;
+    });
+
+    toast.success(`Pronto! O número ${value} é seu!`, {
+      position: toast.POSITION.TOP_CENTER,
     });
   };
 
