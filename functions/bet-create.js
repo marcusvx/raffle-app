@@ -1,10 +1,11 @@
 import { query, Client } from "faunadb";
+import { sendMail } from "./mailer";
 
 const client = new Client({
   secret: process.env.FAUNADB_SERVER_SECRET,
 });
 
-export const handler = async (event, _, callback) => {
+export const handler = async (event) => {
   const data = JSON.parse(event.body);
   const { name, phone, email, ticketId } = data;
 
@@ -31,20 +32,35 @@ export const handler = async (event, _, callback) => {
     console.log("Bet created successfully", betResponse);
 
     const ticketUpdateResponse = await client.query(
-      query.Update(query.Ref(`classes/tickets/${ticketId}`), { taken: true })
+      query.Update(query.Ref(`classes/tickets/${ticketId}`), {
+        data: { taken: true },
+      })
     );
 
     console.log("Ticket updated successfully", ticketUpdateResponse);
 
-    return callback(null, {
+    // will happen async
+    sendMail(
+      `${name} está participando da rifa`,
+      `${name} selecionou o número ${ticketUpdateResponse.data.value} da rifa.
+       Telefone informado: ${phone || "<não informado>"}
+       Email informado: ${email || "<não informado>"}`,
+      `<p><b>${name}</b> selecionou o número <b>${
+        ticketUpdateResponse.data.value
+      }</b> da rifa</p>.
+       <p>Telefone informado: <b>${phone || "não informado"} </b></p>
+       <p>Email informado: <b>${email || "não informado"} </b></p>`
+    );
+
+    return {
       statusCode: 200,
       body: JSON.stringify(customerResponse),
-    });
+    };
   } catch (error) {
     console.log("error", error);
-    return callback(null, {
+    return {
       statusCode: 400,
       body: JSON.stringify(error),
-    });
+    };
   }
 };

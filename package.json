@@ -9,6 +9,7 @@
     "bulma": "^0.9.2",
     "faunadb": "^4.2.0",
     "http-proxy-middleware": "^1.3.1",
+    "nodemailer": "^6.6.0",
     "react": "^17.0.2",
     "react-bulma-components": "^4.0.2",
     "react-dom": "^17.0.2",
@@ -19,7 +20,7 @@
   "scripts": {
     "start": "npm-run-all --parallel start:app start:server",
     "start:app": "react-scripts start",
-    "start:server": "netlify-lambda serve functions -c ./webpack.config.js",
+    "start:server": "env-cmd netlify-lambda serve functions -c ./webpack.config.js",
     "build": "npm-run-all --parallel build:**",
     "build:app": "react-scripts build",
     "build:functions": "netlify-lambda build functions -c ./webpack.config.js",
@@ -45,6 +46,7 @@
     ]
   },
   "devDependencies": {
+    "env-cmd": "^10.1.0",
     "netlify-lambda": "^2.0.6",
     "npm-run-all": "^4.1.5"
   }

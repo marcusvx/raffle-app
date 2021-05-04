@@ -2,6 +2,7 @@ import "./styles.css";
 import { Modal, Button, Form } from "react-bulma-components";
 import { useState } from "react";
 import api from "../../utils/api";
+import { Spinner } from "../Spinner";
 
 export const FormModal = (props) => {
   const { hideModal, selectedTicket, onConfirm } = props;
@@ -9,8 +10,10 @@ export const FormModal = (props) => {
   const [nameState, setNameState] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const confirmAndClose = async () => {
+    setLoading(true);
     await api.createBet({
       name,
       phone,
@@ -20,6 +23,7 @@ export const FormModal = (props) => {
 
     onConfirm(selectedTicket);
     hideModal();
+    setLoading(false);
   };
 
   const invalidName = () => {
@@ -95,11 +99,12 @@ export const FormModal = (props) => {
           <Button
             color="success"
             onClick={confirmAndClose}
-            disabled={invalidName()}
+            disabled={invalidName() || loading}
           >
-            Confirmar Número
+            {loading ? "Confirmando.." : "Confirmar Número"}
           </Button>
           <Button onClick={hideModal}>Escolher outro</Button>
+          <Spinner show={loading}></Spinner>
         </Modal.Card.Footer>
       </Modal.Card>
     </Modal>
