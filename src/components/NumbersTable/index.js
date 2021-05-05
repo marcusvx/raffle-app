@@ -1,6 +1,7 @@
 import "./styles.css";
 import { FormModal } from "../FormModal";
 import { RaffleNumber } from "../RaffleNumber";
+import { TopNavbar } from "../TopNavbar";
 import { useModal } from "react-modal-hook";
 import { useEffect, useState } from "react";
 import { Box, Heading } from "react-bulma-components";
@@ -60,6 +61,7 @@ export const NumbersTable = () => {
 
   return (
     <>
+      <TopNavbar></TopNavbar>
       <Heading subtitle className="m-4">
         Clique em um número para concorrer ao sorteio
       </Heading>
