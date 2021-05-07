@@ -39,8 +39,7 @@ export const handler = async (event) => {
 
     console.log("Ticket updated successfully", ticketUpdateResponse);
 
-    // will happen async
-    sendMail(
+    await sendMail(
       `${name} está participando da rifa`,
       `${name} selecionou o número ${ticketUpdateResponse.data.value} da rifa.
        Telefone informado: ${phone || "<não informado>"}
