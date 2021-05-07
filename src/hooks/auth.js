@@ -18,17 +18,18 @@ const useProvideAuth = () => {
   );
 
   const signin = async (password) => {
-    const authSuccess = await api.authenticate(password);
-    if (authSuccess) {
+    const result = await api.authenticate(password);
+    if (result.ok) {
       const user = {
         user: "Anonymous",
+        admin: result.admin,
         loginDate: new Date(),
       };
       setUser(user);
       localStorage.setItem("user", JSON.stringify(user));
     }
 
-    return authSuccess;
+    return result;
   };
 
   const signoff = () => {

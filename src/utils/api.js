@@ -16,13 +16,19 @@ const authenticate = async (pwd) => {
     body: JSON.stringify({ pwd }),
     method: "POST",
   });
-  return response.status === 200;
+  return response.json();
+};
+
+const getAllBets = async () => {
+  const response = await fetch("/.netlify/functions/bets-read-all");
+  return await response.json();
 };
 
 const api = {
   readAll,
   createBet,
   authenticate,
+  getAllBets,
 };
 
 export default api;

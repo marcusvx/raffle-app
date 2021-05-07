@@ -17,8 +17,8 @@ export const Login = () => {
       return;
     }
 
-    const successAuth = await auth.signin(password);
-    if (!successAuth) {
+    const authResult = await auth.signin(password);
+    if (!authResult.ok) {
       setInvalidPassword(true);
     }
 
