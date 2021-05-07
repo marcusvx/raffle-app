@@ -1,26 +1,28 @@
-import { Heading, Button, Form } from "react-bulma-components";
+import { Heading, Button, Form, Notification } from "react-bulma-components";
 import { useState } from "react";
 import { useAuth } from "../../hooks/auth";
 import { Redirect } from "react-router-dom";
-import { toast } from "react-toastify";
 
 export const Login = () => {
   const [password, setPassword] = useState("");
+  const [invalidPassword, setInvalidPassword] = useState(false);
 
   const auth = useAuth();
 
-  const handleClick = async () => {
-    if (!password || password.length < 4) {
+  const handleClick = async (e) => {
+    e.preventDefault();
+    setInvalidPassword(false);
+
+    if (!password) {
       return;
     }
 
-    if (await auth.signin(password)) {
-      return <Redirect to="/" />;
+    const successAuth = await auth.signin(password);
+    if (!successAuth) {
+      setInvalidPassword(true);
     }
 
-    toast.error(`Senha inválida! Tente novamente.`, {
-      position: toast.POSITION.TOP_CENTER,
-    });
+    return <Redirect to="/" />;
   };
 
   if (auth.user) {
@@ -35,6 +37,9 @@ export const Login = () => {
             <div className="column is-5-tablet is-4-desktop is-3-widescreen">
               <Heading>Rifa Online</Heading>
               <Heading subtitle>Informe a senha para acessar</Heading>
+              {invalidPassword && (
+                <Notification color="danger">Senha inválida</Notification>
+              )}
               <form action="" className="box">
                 <Form.Field>
                   <Form.Label htmlFor="password" className="label">
@@ -53,7 +58,12 @@ export const Login = () => {
                 </Form.Field>
 
                 <Form.Field>
-                  <Button color="success" onClick={handleClick}>
+                  <Button
+                    type="submit"
+                    color="success"
+                    onClick={handleClick}
+                    disabled={!password || password.length <= 3}
+                  >
                     Entrar
                   </Button>
                 </Form.Field>
