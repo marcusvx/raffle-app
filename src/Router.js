@@ -1,8 +1,8 @@
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
-import { NumbersTable } from "./components/NumbersTable";
-import { Login } from "./components/Login";
-import { Admin } from "./components/Admin";
 import { useAuth, ProvideAuth } from "./hooks/auth";
+import DefaultPage from "./pages/DefaultPage";
+import LoginPage from "./pages/LoginPage";
+import AdminPage from "./pages/AdminPage";
 
 function PrivateRoute({ children, ...rest }) {
   const auth = useAuth();
@@ -28,13 +28,13 @@ export const Router = () => {
       <BrowserRouter>
         <Switch>
           <Route exact path="/login">
-            <Login></Login>
+            <LoginPage></LoginPage>
           </Route>
           <PrivateRoute requireAdmin={true} exact path="/admin">
-            <Admin></Admin>
+            <AdminPage></AdminPage>
           </PrivateRoute>
           <PrivateRoute path="/">
-            <NumbersTable></NumbersTable>
+            <DefaultPage></DefaultPage>
           </PrivateRoute>
         </Switch>
       </BrowserRouter>

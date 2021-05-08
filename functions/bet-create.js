@@ -46,7 +46,7 @@ export const handler = async (event) => {
        Email informado: ${email || "<não informado>"}`,
       `<p><b>${name}</b> selecionou o número <b>${
         ticketUpdateResponse.data.value
-      }</b> da rifa</p>.
+      }</b> da rifa</p>
        <p>Telefone informado: <b>${phone || "não informado"} </b></p>
        <p>Email informado: <b>${email || "não informado"} </b></p>`
     );

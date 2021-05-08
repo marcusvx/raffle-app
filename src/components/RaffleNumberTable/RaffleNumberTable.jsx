@@ -1,14 +1,13 @@
-import "./styles.css";
-import { FormModal } from "../FormModal";
-import { RaffleNumber } from "../RaffleNumber";
-import { TopNavbar } from "../TopNavbar";
+import "./RaffleNumberTable.css";
+import FormModal from "../FormModal";
+import RaffleNumber from "../RaffleNumber";
 import { useModal } from "react-modal-hook";
 import { useEffect, useState } from "react";
-import { Box, Heading } from "react-bulma-components";
+import { Box } from "react-bulma-components";
 import { toast } from "react-toastify";
 import api from "../../utils/api";
 
-export const NumbersTable = () => {
+export default () => {
   const [selectedTicket, setSelectedTicket] = useState();
   const [tickets, setTickets] = useState();
 
@@ -60,21 +59,15 @@ export const NumbersTable = () => {
   };
 
   return (
-    <>
-      <TopNavbar></TopNavbar>
-      <Heading subtitle className="m-4">
-        Clique em um número para concorrer ao sorteio
-      </Heading>
-      <Box className="numbers-table">
-        {tickets &&
-          tickets.map((ticket) => (
-            <RaffleNumber
-              key={ticket.value}
-              ticket={ticket}
-              onClick={handleClick}
-            ></RaffleNumber>
-          ))}
-      </Box>
-    </>
+    <Box className="numbers-table">
+      {tickets &&
+        tickets.map((ticket) => (
+          <RaffleNumber
+            key={ticket.value}
+            ticket={ticket}
+            onClick={handleClick}
+          ></RaffleNumber>
+        ))}
+    </Box>
   );
 };
