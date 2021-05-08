@@ -9,7 +9,11 @@ export default () => (
     <Hero.Body>
       <Container>
         <Columns centered>
-          <Columns.Column tablet={5} desktop={4} widescreen={3}>
+          <Columns.Column
+            desktop={{ size: 5 }}
+            tablet={{ size: 6 }}
+            widescreen={{ size: 4 }}
+          >
             <Heading>Rifa Online</Heading>
             <Heading subtitle>Informe a senha para acessar</Heading>
             <LoginForm />
