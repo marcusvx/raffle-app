@@ -1,7 +1,11 @@
 import { React, useState } from 'react';
 import { Redirect } from 'react-router-dom';
-import { Notification, Button, Form } from 'react-bulma-components';
-import { useAuth } from '../../hooks/auth';
+import {
+  Icon, Notification, Button, Form,
+} from 'react-bulma-components';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faKey } from '@fortawesome/free-solid-svg-icons';
+import { useAuth } from 'hooks/auth';
 
 export default () => {
   const [password, setPassword] = useState('');
@@ -48,6 +52,9 @@ export default () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
+            <Icon align="left" size="small">
+              <FontAwesomeIcon icon={faKey} />
+            </Icon>
           </Form.Control>
         </Form.Field>
 

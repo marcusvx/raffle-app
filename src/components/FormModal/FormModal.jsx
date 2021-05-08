@@ -1,7 +1,16 @@
 import { React, useState } from 'react';
-import { Modal, Button, Form } from 'react-bulma-components';
-
+import {
+  Icon, Modal, Button, Form,
+} from 'react-bulma-components';
 import PropTypes from 'prop-types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faCheck,
+  faRedo,
+  faEnvelope,
+  faUser,
+  faMobileAlt,
+} from '@fortawesome/free-solid-svg-icons';
 import api from '../../utils/api';
 import Spinner from '../Spinner';
 
@@ -66,6 +75,9 @@ export const FormModal = (props) => {
                   onChange={handleNameChange}
                   onBlur={handleNameChange}
                 />
+                <Icon align="left" size="small">
+                  <FontAwesomeIcon icon={faUser} />
+                </Icon>
               </Form.Control>
               {nameState === 'danger' && (
                 <Form.Help color={nameState}>
@@ -82,6 +94,9 @@ export const FormModal = (props) => {
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                 />
+                <Icon align="left" size="small">
+                  <FontAwesomeIcon icon={faMobileAlt} />
+                </Icon>
               </Form.Control>
             </Form.Field>
 
@@ -93,6 +108,9 @@ export const FormModal = (props) => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
+                <Icon align="left" size="small">
+                  <FontAwesomeIcon icon={faEnvelope} />
+                </Icon>
               </Form.Control>
             </Form.Field>
           </form>
@@ -103,9 +121,17 @@ export const FormModal = (props) => {
             onClick={confirmAndClose}
             disabled={invalidName() || loading}
           >
+            <Icon className="mr-1">
+              <FontAwesomeIcon icon={faCheck} />
+            </Icon>
             {loading ? 'Confirmando..' : 'Confirmar Número'}
           </Button>
-          <Button onClick={hideModal}>Escolher outro</Button>
+          <Button onClick={hideModal}>
+            <Icon className="mr-1">
+              <FontAwesomeIcon icon={faRedo} />
+            </Icon>
+            Escolher outro
+          </Button>
           <Spinner show={loading} />
         </Modal.Card.Footer>
       </Modal.Card>

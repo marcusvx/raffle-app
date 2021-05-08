@@ -16,12 +16,13 @@ const useProvideAuth = () => {
   const signin = async (password) => {
     const result = await api.authenticate(password);
     if (result.ok) {
-      setUser({
+      const resultUser = {
         user: 'Anonymous',
         admin: result.admin,
         loginDate: new Date(),
-      });
-      localStorage.setItem('user', JSON.stringify(user));
+      };
+      setUser(resultUser);
+      localStorage.setItem('user', JSON.stringify(resultUser));
     }
 
     return result;
