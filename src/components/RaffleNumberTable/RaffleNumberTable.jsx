@@ -1,11 +1,11 @@
-import "./RaffleNumberTable.css";
-import FormModal from "../FormModal";
-import RaffleNumber from "../RaffleNumber";
-import { useModal } from "react-modal-hook";
-import { useEffect, useState } from "react";
-import { Box } from "react-bulma-components";
-import { toast } from "react-toastify";
-import api from "../../utils/api";
+import { React, useEffect, useState } from 'react';
+import './RaffleNumberTable.css';
+import { useModal } from 'react-modal-hook';
+import { Box } from 'react-bulma-components';
+import { toast } from 'react-toastify';
+import RaffleNumber from '../RaffleNumber';
+import FormModal from '../FormModal';
+import api from '../../utils/api';
 
 export default () => {
   const [selectedTicket, setSelectedTicket] = useState();
@@ -21,9 +21,9 @@ export default () => {
           return {
             value,
             taken,
-            id: ref["@ref"].id,
+            id: ref['@ref'].id,
           };
-        })
+        }),
       );
     }
     getAllTickets();
@@ -33,7 +33,8 @@ export default () => {
     const { value } = ticket;
 
     setTickets((state) => {
-      state.find((n) => n.value === value).taken = true;
+      const takenTicket = state.find((n) => n.value === value);
+      takenTicket.taken = true;
       return state;
     });
 
@@ -48,9 +49,9 @@ export default () => {
         hideModal={hideModal}
         selectedTicket={selectedTicket}
         onConfirm={confirmedNumber}
-      ></FormModal>
+      />
     ),
-    [selectedTicket]
+    [selectedTicket],
   );
 
   const handleClick = (ticket) => {
@@ -60,13 +61,13 @@ export default () => {
 
   return (
     <Box className="numbers-table">
-      {tickets &&
-        tickets.map((ticket) => (
+      {tickets
+        && tickets.map((ticket) => (
           <RaffleNumber
             key={ticket.value}
             ticket={ticket}
             onClick={handleClick}
-          ></RaffleNumber>
+          />
         ))}
     </Box>
   );

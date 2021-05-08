@@ -1,14 +1,16 @@
-import { Modal, Button, Form } from "react-bulma-components";
-import { useState } from "react";
-import api from "../../utils/api";
-import Spinner from "../Spinner";
+import { React, useState } from 'react';
+import { Modal, Button, Form } from 'react-bulma-components';
 
-export default (props) => {
+import PropTypes from 'prop-types';
+import api from '../../utils/api';
+import Spinner from '../Spinner';
+
+export const FormModal = (props) => {
   const { hideModal, selectedTicket, onConfirm } = props;
-  const [name, setName] = useState("");
-  const [nameState, setNameState] = useState("");
-  const [phone, setPhone] = useState("");
-  const [email, setEmail] = useState("");
+  const [name, setName] = useState('');
+  const [nameState, setNameState] = useState('');
+  const [phone, setPhone] = useState('');
+  const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
 
   const confirmAndClose = async () => {
@@ -25,28 +27,29 @@ export default (props) => {
     setLoading(false);
   };
 
-  const invalidName = () => {
-    return !name || name.length <= 2 || (name.match(/ /g) || []).length === 0;
-  };
+  const invalidName = () => !name || name.length <= 2 || (name.match(/ /g) || []).length === 0;
 
   const handleNameChange = (e) => {
     setName(e.target.value);
-    setNameState(() => {
-      return invalidName() ? "danger" : "success";
-    });
+    setNameState(() => (invalidName() ? 'danger' : 'success'));
   };
 
   return (
-    <Modal show={true} onClose={() => hideModal()}>
+    <Modal show onClose={() => hideModal()}>
       <Modal.Card>
-        <Modal.Card.Header showClose={true}>
+        <Modal.Card.Header showClose>
           <Modal.Card.Title>
-            Você escolheu o número <strong>{selectedTicket.value}</strong>
+            Você escolheu o número
+            {' '}
+            <strong>{selectedTicket.value}</strong>
           </Modal.Card.Title>
         </Modal.Card.Header>
         <Modal.Card.Body>
           <p className="mt-2 mb-4">
-            Você escolheu o número <strong>{selectedTicket.value}</strong>. Por
+            Você escolheu o número
+            {' '}
+            <strong>{selectedTicket.value}</strong>
+            . Por
             favor, informe os dados abaixo para que possamos registrar seu
             número no sorteio.
           </p>
@@ -64,7 +67,7 @@ export default (props) => {
                   onBlur={handleNameChange}
                 />
               </Form.Control>
-              {nameState === "danger" && (
+              {nameState === 'danger' && (
                 <Form.Help color={nameState}>
                   Informe seu nome completo
                 </Form.Help>
@@ -100,12 +103,24 @@ export default (props) => {
             onClick={confirmAndClose}
             disabled={invalidName() || loading}
           >
-            {loading ? "Confirmando.." : "Confirmar Número"}
+            {loading ? 'Confirmando..' : 'Confirmar Número'}
           </Button>
           <Button onClick={hideModal}>Escolher outro</Button>
-          <Spinner show={loading}></Spinner>
+          <Spinner show={loading} />
         </Modal.Card.Footer>
       </Modal.Card>
     </Modal>
   );
 };
+
+FormModal.propTypes = {
+  hideModal: PropTypes.func.isRequired,
+  selectedTicket: PropTypes.exact({
+    id: PropTypes.string,
+    value: PropTypes.number,
+    taken: PropTypes.bool,
+  }).isRequired,
+  onConfirm: PropTypes.func.isRequired,
+};
+
+export default FormModal;

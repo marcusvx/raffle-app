@@ -1,6 +1,8 @@
-import "./RaffleNumber.css";
+import { React } from 'react';
+import './RaffleNumber.css';
+import PropTypes from 'prop-types';
 
-export default (props) => {
+const RaffleNumber = (props) => {
   const { ticket, onClick } = props;
   const { value, taken } = ticket;
 
@@ -16,11 +18,23 @@ export default (props) => {
   }
 
   return (
-    <div
+    <button
+      type="button"
       className="number m-1 is-size-4-desktop is-size-2-mobile clickable"
       onClick={() => onClick(ticket)}
     >
       {value}
-    </div>
+    </button>
   );
 };
+
+RaffleNumber.propTypes = {
+  ticket: PropTypes.exact({
+    id: PropTypes.string,
+    value: PropTypes.number,
+    taken: PropTypes.bool,
+  }).isRequired,
+  onClick: PropTypes.func.isRequired,
+};
+
+export default RaffleNumber;

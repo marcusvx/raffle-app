@@ -1,7 +1,7 @@
-import { query, Client } from "faunadb";
+import { query, Client } from 'faunadb';
 
 export async function handler(event, context) {
-  console.log("Function `ticket-read-all` invoked");
+  console.log('Function `ticket-read-all` invoked');
 
   const client = new Client({
     secret: process.env.FAUNADB_SERVER_SECRET,
@@ -10,11 +10,11 @@ export async function handler(event, context) {
   try {
     const response = await client.query(
       query.Paginate(
-        query.Match(query.Ref("indexes/all_tickets_sort_by_value")),
+        query.Match(query.Ref('indexes/all_tickets_sort_by_value')),
         {
           size: 100,
-        }
-      )
+        },
+      ),
     );
 
     const tickets = response.data;
@@ -25,7 +25,7 @@ export async function handler(event, context) {
       body: JSON.stringify(tickets),
     };
   } catch (error) {
-    console.log("error", error);
+    console.log('error', error);
     return {
       statusCode: 400,
       body: JSON.stringify(error),

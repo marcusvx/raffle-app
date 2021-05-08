@@ -1,13 +1,14 @@
-import { Navbar, Heading } from "react-bulma-components";
-import { useAuth } from "../../hooks/auth";
-import { useHistory } from "react-router-dom";
+import { React } from 'react';
+import { Navbar, Heading } from 'react-bulma-components';
+import { useHistory } from 'react-router-dom';
+import { useAuth } from '../../hooks/auth';
 
 const TopNavbar = () => {
   const auth = useAuth();
   const history = useHistory();
   const signoff = () => {
     auth.signoff();
-    history.push("/login");
+    history.push('/login');
   };
 
   return (

@@ -1,1 +1,1 @@
-export { default } from "./RaffleNumberTable";
+export { default } from './RaffleNumberTable';

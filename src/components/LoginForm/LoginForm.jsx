@@ -1,11 +1,10 @@
-import { useState } from "react";
-import { useAuth } from "../../hooks/auth";
-import { Redirect } from "react-router-dom";
-import { Notification } from "react-bulma-components";
-import { Button, Form } from "react-bulma-components";
+import { React, useState } from 'react';
+import { Redirect } from 'react-router-dom';
+import { Notification, Button, Form } from 'react-bulma-components';
+import { useAuth } from '../../hooks/auth';
 
 export default () => {
-  const [password, setPassword] = useState("");
+  const [password, setPassword] = useState('');
   const [invalidPassword, setInvalidPassword] = useState(false);
 
   const auth = useAuth();
@@ -15,7 +14,7 @@ export default () => {
     setInvalidPassword(false);
 
     if (!password) {
-      return;
+      return '';
     }
 
     const authResult = await auth.signin(password);

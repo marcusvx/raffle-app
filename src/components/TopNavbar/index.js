@@ -1,2 +1,3 @@
-import TopNavbar from "./TopNavbar";
+import TopNavbar from './TopNavbar';
+
 export default TopNavbar;

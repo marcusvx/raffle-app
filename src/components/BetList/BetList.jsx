@@ -1,6 +1,9 @@
-import { Card, Heading, Content, Columns } from "react-bulma-components";
-import { useState, useEffect } from "react";
-import api from "../../utils/api";
+import { React, useState, useEffect } from 'react';
+import {
+  Card, Heading, Content, Columns,
+} from 'react-bulma-components';
+
+import api from 'utils/api';
 
 export default () => {
   const [bets, setBets] = useState();
@@ -17,10 +20,10 @@ export default () => {
   return (
     <>
       <Columns>
-        {bets &&
-          bets.map((bet) => (
+        {bets
+          && bets.map((bet) => (
             <Columns.Column key={bet.ticketValue}>
-              <Card style={{ margin: "auto" }}>
+              <Card style={{ margin: 'auto' }}>
                 <Card.Content>
                   <Content>
                     <Heading subtitle size={6} className="has-text-grey">

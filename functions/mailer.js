@@ -1,7 +1,7 @@
-import nodemailer from "nodemailer";
+import nodemailer from 'nodemailer';
 
 async function sendMail(subject, textContent, htmlContent) {
-  let transporter = nodemailer.createTransport({
+  const transporter = nodemailer.createTransport({
     host: process.env.SMTP_SERVER,
     port: process.env.SMTP_PORT,
     secure: false,
@@ -19,12 +19,12 @@ async function sendMail(subject, textContent, htmlContent) {
       const result = await transporter.sendMail({
         from: process.env.EMAIL_FROM,
         to: process.env.EMAIL_TO,
-        subject: subject,
+        subject,
         text: textContent,
         html: htmlContent,
       });
 
-      console.log("Message sent: %s", result.messageId);
+      console.log('Message sent: %s', result.messageId);
     }
   } catch (error) {
     console.error(error);
