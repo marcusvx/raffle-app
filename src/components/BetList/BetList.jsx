@@ -2,7 +2,6 @@ import { React, useState, useEffect } from 'react';
 import {
   Card, Heading, Content, Columns,
 } from 'react-bulma-components';
-
 import api from 'utils/api';
 
 export default () => {
