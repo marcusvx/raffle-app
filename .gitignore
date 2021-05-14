@@ -23,5 +23,10 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .env
+
 # Local Netlify folder
 .netlify
+
+# IDE specific configuration
+.idea
+.vscode
