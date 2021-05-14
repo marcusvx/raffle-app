@@ -1,61 +1,81 @@
-import { React, useState, useEffect } from 'react';
-import {
-  Card, Heading, Content, Columns,
-} from 'react-bulma-components';
+import { React, useEffect, useState } from 'react';
+import { Columns, Container } from 'react-bulma-components';
 import api from 'utils/api';
+import './BetList.css';
+import BetListItem from './BetListItem';
+import BetListSort from './BetListSort';
 
 export default () => {
-  const [bets, setBets] = useState();
+  const [bets, setBets] = useState([]);
+  const [sortType, setSortType] = useState('default');
+  const [sortDesc, setSortDesc] = useState(false);
+
+  const getAllBets = async () => {
+    const result = await api.getAllBets();
+    setBets(sortDesc ? result.reverse() : result);
+  };
 
   useEffect(() => {
-    const getAllBets = async () => {
-      const result = await api.getAllBets();
+    const sortBets = () => {
+      switch (sortType) {
+        case 'number':
+          setBets((state) => [...state].sort((a, b) => {
+            if (sortDesc) return b.ticketValue - a.ticketValue;
+            return a.ticketValue - b.ticketValue;
+          }));
+          break;
 
-      setBets(result);
+        case 'name':
+          // eslint-disable-next-line max-len
+          setBets((state) => [...state].sort((a, b) => {
+            if (sortDesc) return b.customerName.localeCompare(a.customerName);
+            return a.customerName.localeCompare(b.customerName);
+          }));
+          break;
+
+        default:
+          getAllBets();
+          break;
+      }
     };
-    getAllBets();
-  }, []);
+
+    sortBets();
+  }, [sortType, sortDesc]);
+
+  const changeSort = (type) => {
+    setSortDesc((state) => (type === sortType ? !state : false));
+    setSortType(type);
+  };
 
   return (
-    <>
+    <Container className="is-fluid">
       <Columns>
-        {bets
-          && bets.map((bet) => (
-            <Columns.Column key={bet.ticketValue}>
-              <Card style={{ margin: 'auto' }}>
-                <Card.Content>
-                  <Content>
-                    <Heading subtitle size={6} className="has-text-grey">
-                      Número
-                    </Heading>
-
-                    <Heading size={4}>{bet.ticketValue}</Heading>
-                    <div>
-                      <div className="mb-2">
-                        <span className="label has-text-grey is-size-7 m-0">
-                          Nome:
-                        </span>
-                        <strong>{bet.customerName}</strong>
-                      </div>
-                      <div className="mb-2">
-                        <span className="label has-text-grey is-size-7 m-0">
-                          Telefone:
-                        </span>
-                        <strong>{bet.customerPhone}</strong>
-                      </div>
-                      <div>
-                        <span className="label has-text-grey is-size-7 m-0">
-                          E-mail:
-                        </span>
-                        <strong>{bet.customerEmail}</strong>
-                      </div>
-                    </div>
-                  </Content>
-                </Card.Content>
-              </Card>
-            </Columns.Column>
-          ))}
+        <Columns.Column desktop={{ offset: 8, size: 4 }}>
+          <BetListSort
+            sortType={sortType}
+            changeSort={(type) => changeSort(type)}
+            sortDesc={sortDesc}
+          />
+        </Columns.Column>
       </Columns>
-    </>
+      <Columns centered>
+        {bets
+        && bets.map((bet) => (
+          <Columns.Column
+            key={bet.ticketValue}
+            desktop={{ size: 4 }}
+            tablet={{ size: 6 }}
+            mobile={{ size: 12 }}
+          >
+            <BetListItem
+              ticketValue={bet.ticketValue}
+              customerPhone={bet.customerPhone}
+              customerEmail={bet.customerEmail}
+              customerName={bet.customerName}
+            />
+          </Columns.Column>
+        ))}
+      </Columns>
+    </Container>
   );
 };
