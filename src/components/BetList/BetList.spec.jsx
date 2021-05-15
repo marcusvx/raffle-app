@@ -1,6 +1,8 @@
-import { render, fireEvent, waitFor, screen } from '@testing-library/react';
-import BetList from './BetList';
+import { render } from '@testing-library/react';
 import api from 'utils/api';
+import React from 'react';
+import BetList from './BetList';
+
 const BETS = [
   {
     ticketValue: 99,
@@ -20,7 +22,7 @@ describe('BetList component', () => {
   it('should render bet details correctly', async () => {
     jest.spyOn(api, 'getAllBets').mockResolvedValue(BETS);
 
-    const { findByText } = render(<BetList></BetList>);
+    const { findByText } = render(<BetList />);
 
     expect(await findByText('99')).toBeInTheDocument();
     expect(await findByText('John Doe')).toBeInTheDocument();

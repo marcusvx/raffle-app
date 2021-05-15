@@ -1,5 +1,5 @@
 import { Card, Content, Heading } from 'react-bulma-components';
-import { React } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 const BetListItem = ({
